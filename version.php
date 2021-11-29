@@ -28,4 +28,4 @@ $plugin->component = 'block_covid_notifications'; // Recommended since 2.0.2 (MD
 $plugin->version = 2021281028; // YYYYMMDDHH (year, month, day, 24-hr format hour).
 $plugin->requires = 2018051712; // YYYYMMDDHH (Version number for Moodle v3.5.3 as at 21/01/2019).
 $plugin->maturity = MATURITY_STABLE; // Code maturity/stability.
-$plugin->release = 'v2.1.2'; // Human-readable release version.
+$plugin->release = 'v2.1.3'; // Human-readable release version.
