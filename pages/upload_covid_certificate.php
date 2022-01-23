@@ -31,9 +31,9 @@ require_once($CFG->dirroot . '/blocks/covid_notifications/classes/covidcertifica
 require_once($CFG->libdir . '/formslib.php');
 
 require_login();
+require_sesskey();
 
 $context = context_system::instance();
-
 if (!has_capability('moodle/user:editownprofile', $context)) {
     throw new moodle_exception('covid_notifications_err_nocapability', 'block_covid_notifications');
 }
@@ -57,9 +57,7 @@ if ($record = $DB->get_record('block_covid_notifications', array('user_id' => $u
     }
 }
 $id = !empty($record->id) ? $record->id : "";
-
 $mform = new \block_covid_notifications\forms\upload_covidcertificate_form();
-
 $guideline = new block_covid_notifications_handel();
 
 // From user name who send email used in message.
@@ -70,17 +68,15 @@ $timestamp = $time->getTimestamp();
 // Form processing and displaying is done here.
 if ($mform->is_cancelled()) {
     // Handle form cancel operation, if cancel button is present on form.
-    $data1 = new stdClass(); // Only for empty if condition.
-} else if ($formdata = $mform->get_data()) {
+    redirect($redirecturl);
+} else if ($mform->is_submitted() && $mform->is_validated() && confirm_sesskey() && $formdata = $mform->get_data()) {
     // Get covidcertificate url.
     $covidcertificate = $guideline->getimagefullurl($formdata->vaccinationcertificate, $context->id);
     // Get Selected user who get the email of certificate.
     $pluginconfig = get_config('block_covid_notifications');
     $touser = $guideline->getuserbyselectedid($pluginconfig->approvedrole);
     $emailmessage = $pluginconfig->emailmessagetext;
-
     $data = new stdClass();
-
     if ($id) {
         $data->id = $id;
         $data->user_id = $USER->id;

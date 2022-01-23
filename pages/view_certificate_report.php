@@ -28,9 +28,8 @@ require_once($CFG->dirroot . '/blocks/covid_notifications/classes/covidcertifica
 
 
 $context = context_system::instance();
-$allowedit = has_capability('block/notifications:managenotifications', $context);
+$allowedit = has_capability('block/covid_notifications:managenotifications', $context);
 require_login();
-
 $guideline = new block_covid_notifications_handel();
 $pluginconfig = get_config('block_covid_notifications');
 
@@ -46,7 +45,7 @@ if (!$allowedit && !$managerallow) {
     throw new moodle_exception('covid_notifications_err_nocapability', 'block_covid_notifications');
 }
 
-$url = new moodle_url('/blocks/covid_notifications/pages/view-certificate-report.php');
+$url = new moodle_url('/blocks/covid_notifications/pages/view_certificate_report.php');
 $PAGE->set_url($url);
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('page/userreport', "block_covid_notifications"));
@@ -98,10 +97,9 @@ foreach ($scolumns as $sorts) {
 if (!in_array($sort, $allsorts, true)) {
     $sort = $defaultsort;
 }
-$params = [];
 
 echo $OUTPUT->header();
-$orderby = "ORDER BY $sort $dir";
+$params = [$sort, $dir];
 $sql = "SELECT
     u.id,
     u.username,
@@ -114,13 +112,14 @@ $sql = "SELECT
     ue.id as edit
     FROM {block_covid_notifications} ue
     JOIN {user} u ON u.id = ue.user_id
-    WHERE u.id = ue.user_id $orderby";
+    WHERE u.id = ue.user_id ORDER BY ?, ?";
 
 // Old cooment code echo html_writer::start_tag('ul'); end.
 $records = $DB->get_records_sql($sql, $params);
+
 $baseurl = new moodle_url($url, [
     "sort" => $sort,
-    "dir" => $dir,
+    "dir" => $dir
 ]);
 
 $hcolumns = array();
@@ -132,7 +131,8 @@ foreach ($columns as $column) {
             $cicon = "";
         } else {
             $cdir = $dir == "ASC" ? "DESC" : "ASC";
-            $cicondir = ($dir == "ASC") ? "down" : "up";
+            $cicondir = ($dir == "ASC") ? get_string('down', "block_covid_notifications")
+            : get_string('up', "block_covid_notifications");
             $cicon = $OUTPUT->pix_icon('t/' . $cicondir, get_string($cicondir));
         }
         // Get a string for this sort link.
@@ -161,7 +161,8 @@ foreach ($records as $record) {
     } else {
         $record->approved = get_string('report/statuspending', "block_covid_notifications");
     }
-    $message = !empty($record->message) ? $record->message : get_string('report/notsvailable', "block_covid_notifications");
+    $message = !empty($record->message) ? format_string($record->message)
+    : get_string('report/notsvailable', "block_covid_notifications");
     $userfullname = !empty($record->fullname) ? $record->fullname : get_string('report/notsvailable', "block_covid_notifications");
     $curl = !empty($record->vaccinationcertificate) ? new moodle_url($record->vaccinationcertificate) : "";
     $imageurl = !empty($curl) ? '<a href="' . $curl . '" target="_blank">'.

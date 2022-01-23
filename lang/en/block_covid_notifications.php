@@ -26,10 +26,10 @@
 $string['pluginname'] = 'Covid-19 notifications';
 
 // Capabilities.
-$string['notifications:addinstance'] = 'Add a new Covid-19 notifications block';
-$string['notifications:myaddinstance'] = 'Add a new Covid-19 notifications block to the my Moodle page';
-$string['notifications:managenotifications'] = 'Manage notifications and the relative settings';
-$string['notifications:manageownnotifications'] = 'Manage own notifications and the relative settings';
+$string['covid_notifications:addinstance'] = 'Add a new Covid-19 notifications block';
+$string['covid_notifications:myaddinstance'] = 'Add a new Covid-19 notifications block to the my Moodle page';
+$string['covid_notifications:managenotifications'] = 'Manage notifications and the relative settings';
+$string['covid_notifications:manageownnotifications'] = 'Manage own notifications and the relative settings';
 
 // Block Configuration.
 $string['notifications'] = 'Covid-19 notifications';
@@ -109,7 +109,7 @@ $string['setting/aicon'] = 'aicon';
 $string['setting/emailmessagetext'] = 'Email Template:';
 $string['setting/emailmessagetext_desc'] = 'This email template will send information about the
                                             submission to selected role/s. You can specify
-                                            additional short-codes such as [username], [firstname] and [lastname].';
+                                            additional short-codes such as [username], [userfirstname], [userlastname], [useremail] and [userfullname].';
 $string['setting/emailmessagetext_default'] = '';
 
 $string['clikupploadbutton'] = 'Upload Vaccination Certificate';
@@ -166,7 +166,7 @@ $string['covid_notifications_invalid_user_record'] = 'User record  don\'t exist.
 $string['covid_main_class'] = 'main';
 $string['covid_more_details_class'] = 'moredetails';
 $string['covid_btn_prim_class'] = 'btn btn-primary';
-
+$string['covid_add_icon_class'] = 'added-icon';
 $string['database/username'] = 'username';
 $string['database/fullname'] = 'fullname';
 $string['database/vaccinationcertificate'] = 'vaccinationcertificate';
@@ -177,4 +177,27 @@ $string['database/date_approved'] = 'date_approved';
 $string['database/approvedby_user_id'] = 'approvedby_user_id';
 $string['database/edit'] = 'edit';
 $string['table/class'] = 'admintable generaltable';
+$string['filenotexisterror'] = 'File not available.';
+$string['down'] = 'down';
+$string['up'] = 'up';
+$string['savechanges'] = 'Save changes';
+
+
+
+// Privacy API.
+$string['privacy:metadata:block_covid_notifications'] = 'Information about covid notifications the user has been exposed to and recorded interactions.';
+$string['privacy:metadata:block_covid_notifications:user_id'] = 'The ID of the user that has seen/dismissed the notification.';
+$string['privacy:metadata:block_covid_notifications:certificateid'] = 'The forum stores file id which have been uploaded by the user to form part of a forum post (any) .';
+$string['privacy:metadata:block_covid_notifications:message'] = 'The body/message of the covid notification.';
+$string['privacy:metadata:block_covid_notifications:type'] = 'Flag of whether define type of Vaccination  (1 = fully 2 = partially ).';
+$string['privacy:metadata:block_covid_notifications:approved'] = 'Flag of whether define user is approved for fully vaccination  (1 = approved 2 = not approved).';
+$string['privacy:metadata:block_covid_notifications:date_submit'] = 'On what date does the user submit the certificate.';
+$string['privacy:metadata:block_covid_notifications:date_approved'] = 'On what date does the user is approved (Fully  Or partially vaccinated).';
+$string['privacy:metadata:block_covid_notifications:approvedby_user_id'] = 'The ID of the user that approved the vaccination certificate (selected from admin)';
+$string['privacy:metadata:block_covid_notifications:timeupdated'] = 'On what date does the records is updated';
+$string['privacy:metadata:block_covid_notifications:vaccinationcertificate'] = 'The forum stores file which have been uploaded by the user to form part of a forum post';
+
+
+
+
 

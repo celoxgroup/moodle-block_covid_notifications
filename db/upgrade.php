@@ -41,16 +41,16 @@ function xmldb_block_covid_notifications_upgrade($oldversion) {
 
         // Adding fields to table block_covid_notifications.
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
-        $table->add_field('user_id', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('user_id', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, null);
         $table->add_field('vaccinationcertificate', XMLDB_TYPE_TEXT, null, null, null, null, null);
-        $table->add_field('certificateid', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, '0000000000');
-        $table->add_field('type', XMLDB_TYPE_CHAR, '30', null, XMLDB_NOTNULL, null, 'info');
+        $table->add_field('certificateid', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, '0000000000');
+        $table->add_field('type', XMLDB_TYPE_CHAR, '30', null, XMLDB_NOTNULL, null, null);
         $table->add_field('message', XMLDB_TYPE_TEXT, null, null, null, null, null);
-        $table->add_field('approved', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('approved', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, null);
         $table->add_field('date_submit', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, '0000000000');
         $table->add_field('date_approved', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, '0000000000');
-        $table->add_field('approvedby_user_id', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('timeupdated', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, '0000000000');
+        $table->add_field('approvedby_user_id', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('timeupdated', XMLDB_TYPE_INTEGER, '20', null, XMLDB_NOTNULL, null, '0000000000');
 
         // Adding keys to table block_covid_notifications.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
@@ -60,7 +60,7 @@ function xmldb_block_covid_notifications_upgrade($oldversion) {
             $dbman->create_table($table);
         }
         // Notifications savepoint reached.
-        upgrade_block_savepoint(true, 2017100217, 'notifications');
+        upgrade_block_savepoint(true, 2021100217, 'notifications');
     }
     // Add future upgrade points here.
     return true;

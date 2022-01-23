@@ -29,7 +29,7 @@ require_login();
 
 $context = context_system::instance();
 
-if (!has_capability('block/notifications:managenotifications', $context)) {
+if (!has_capability('block/covid_notifications:managenotifications', $context)) {
     throw new moodle_exception('covid_notifications_err_nocapability', 'block_covid_notifications');
 }
 
@@ -94,12 +94,8 @@ foreach ($scolumns as $sorts) {
 if (!in_array($sort, $allsorts, true)) {
     $sort = $defaultsort;
 }
-$params = [];
-
 echo $OUTPUT->header();
-
-$orderby = "ORDER BY $sort $dir";
-
+$params = [$sort, $dir];
 $sql = "SELECT
     u.id,
     u.username,
@@ -114,13 +110,13 @@ $sql = "SELECT
     ue.id as edit
     FROM {block_covid_notifications} ue
     JOIN {user} u ON u.id = ue.user_id
-    WHERE u.id = ue.user_id $orderby";
+    WHERE u.id = ue.user_id ORDER BY ?, ?";
 
 $records = $DB->get_records_sql($sql, $params);
 
 $baseurl = new moodle_url($url, [
     "sort" => $sort,
-    "dir" => $dir,
+    "dir" => $dir
 ]);
 
 $hcolumns = array();
@@ -133,7 +129,8 @@ foreach ($columns as $column) {
             $cicon = "";
         } else {
             $cdir = $dir == "ASC" ? "DESC" : "ASC";
-            $cicondir = ($dir == "ASC") ? "down" : "up";
+            $cicondir = ($dir == "ASC") ? get_string('down', "block_covid_notifications")
+            : get_string('up', "block_covid_notifications");
             $cicon = $OUTPUT->pix_icon('t/' . $cicondir, get_string($cicondir));
         }
         // Get a string for this sort link.
@@ -171,7 +168,8 @@ foreach ($records as $record) {
                             <i class='icon fa fa-question-circle fa-fw' aria-hidden='true' title='$pen' aria-label='$pen'></i>
                             </span>";
     }
-    $message = !empty($record->message) ? $record->message : get_string('report/notsvailable', "block_covid_notifications");
+    $message = !empty($record->message) ? format_string($record->message)
+    : get_string('report/notsvailable', "block_covid_notifications");
     $userfullname = !empty($record->fullname) ? $record->fullname : get_string(
                                                                     'report/notsvailable',
                                                                     "block_covid_notifications");

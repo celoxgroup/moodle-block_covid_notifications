@@ -43,9 +43,10 @@ if (isset($id) && $id !== '') {
 }
 
 $context = context_system::instance();
-$allowedit = has_capability('block/notifications:managenotifications', $context);
+$allowedit = has_capability('block/covid_notifications:managenotifications', $context);
 
 require_login();
+require_sesskey();
 
 $guideline = new block_covid_notifications_handel();
 $pluginconfig = get_config('block_covid_notifications');
@@ -101,18 +102,16 @@ if (is_siteadmin()) {
 }
 
 $retype = $record->type;
-$remessage = $record->message;
-$cid = $record->certificateid;
+$remessage = format_string($record->message);
 $curl = !empty($record->vaccinationcertificate) ? new moodle_url($record->vaccinationcertificate) : "";
 
-$mform = new \block_covid_notifications\forms\update_covidcertificate_form(null, array(
+$formeditdata = array(
     'id' => $id,
-    'cid' => $cid,
     'curl' => $curl,
-    "userid" => $recorduserid,
-    "retype" => $retype,
-    "remessage" => $remessage)
-);
+    'retype' => $retype,
+    'remessage' => $remessage);
+
+$mform = new \block_covid_notifications\forms\update_covidcertificate_form(null, $formeditdata);
 
 // Form processing and displaying is done here.
 $time = new DateTime("now", core_date::get_server_timezone_object());
@@ -121,15 +120,15 @@ $timestamp = $time->getTimestamp();
 if ($mform->is_cancelled()) {
     // Handle form cancel operation, if cancel button is present on form.
     redirect($redirecturl);
-} else if ($formdata = $mform->get_data()) {
+} else if ($mform->is_submitted() && $mform->is_validated() && confirm_sesskey() && $formdata = $mform->get_data()) {
     $data = new stdClass();
-    if ($id && confirm_sesskey()) {
+    if ($id) {
         $data->id = $id;
         $data->user_id = $record->user_id;
         $data->vaccinationcertificate = $record->vaccinationcertificate;
         $data->certificateid = $record->certificateid;
         $data->type = $formdata->type;
-        $data->message = $formdata->message;
+        $data->message = format_string($formdata->message);
         $data->approved = $formdata->type;
         $data->date_submit = $record->date_submit;
         $data->date_approved = $timestamp;
@@ -138,10 +137,12 @@ if ($mform->is_cancelled()) {
         $guidelineid = $guideline->updateguideline($data);
         if ($guidelineid) {
             $cohortid = $pluginconfig->cohort;
-            if ($data->type == 2) {
-                cohort_add_member($cohortid, $data->user_id);
-            } else {
-                cohort_remove_member($cohortid, $data->user_id);
+            if (!empty($cohortid)) {
+                if ($data->type == 2) {
+                    cohort_add_member($cohortid, $data->user_id);
+                } else {
+                    cohort_remove_member($cohortid, $data->user_id);
+                }
             }
             redirect($redirecturl,
             get_string('updatesuccess', 'block_covid_notifications'),

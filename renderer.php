@@ -85,7 +85,7 @@ class block_covid_notifications_renderer extends plugin_renderer_base
         if (!empty($notificationiconflag) && $notificationiconflag == 1) {
             $html .= '<div class="cv-icone-left"><img class="notification_aicon" src="' .
             $this->image_url($aicon, 'block_covid_notifications') . '"></div>';
-            $class = " added-icon";
+            $class = " " . get_string('covid_add_icon_class', 'block_covid_notifications');
         }
 
         $html .= '<div class="cv-notification-right' . $class . ' ">';
@@ -100,11 +100,13 @@ class block_covid_notifications_renderer extends plugin_renderer_base
         }
 
         if ( $retype != strtolower(get_string('report/statuspending', 'block_covid_notifications')) ) {
-            $html .= html_writer::start_tag('div', array('class' => 'moredetails'));
+            $html .= html_writer::start_tag('div',
+            array('class' => get_string('covid_more_details_class', 'block_covid_notifications')));
             $html .= html_writer::link(
-                new moodle_url('/blocks/covid_notifications/pages/upload_covid_certificate.php'),
+                new moodle_url('/blocks/covid_notifications/pages/upload_covid_certificate.php',  array('sesskey' => sesskey())),
                 get_string('clikupploadbutton', 'block_covid_notifications'),
-                array('title' => get_string('clikupploadbutton', 'block_covid_notifications'), 'class' => "btn btn-primary"));
+                array('title' => get_string('clikupploadbutton', 'block_covid_notifications'),
+                'class' => get_string('covid_btn_prim_class', 'block_covid_notifications')));
             $html .= html_writer::end_tag('div');
         }
         // Close notification block.

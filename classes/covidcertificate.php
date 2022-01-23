@@ -55,12 +55,13 @@ class block_covid_notifications_handel
         if (empty($rolid)) {
             return $response;
         }
+        $params = [$rolid];
         $sql = "SELECT u.email AS email
         FROM {user} u
         INNER JOIN {role_assignments} ra ON ra.userid = u.id
         INNER JOIN {role} r ON r.id = ra.roleid
-        WHERE u.deleted = 0 AND ra.roleid IN ($rolid)  GROUP BY u.id";
-        $records = $DB->get_records_sql($sql);
+        WHERE u.deleted = 0 AND ra.roleid IN (?)  GROUP BY u.id";
+        $records = $DB->get_records_sql($sql, $params);
         $resonse = [];
         foreach ($records as $singlerecord) {
             $resonse[] = $singlerecord->email;
@@ -74,12 +75,13 @@ class block_covid_notifications_handel
         if (empty($rolid)) {
             return $response;
         }
+        $params = [$rolid];
         $sql = "SELECT u.id AS id
           FROM {user} u
           INNER JOIN {role_assignments} ra ON ra.userid = u.id
           INNER JOIN {role} r ON r.id = ra.roleid
-          WHERE u.deleted = 0 AND ra.roleid IN ($rolid) GROUP BY u.id";
-        $records = $DB->get_records_sql($sql);
+          WHERE u.deleted = 0 AND ra.roleid IN (?) GROUP BY u.id";
+        $records = $DB->get_records_sql($sql, $params);
         $users = [];
         foreach ($records as $singlerecord) {
             $users[] = $singlerecord->id;
@@ -103,7 +105,7 @@ class block_covid_notifications_handel
             foreach ($reffiles as $key => $files) {
                 if ($covidcertificatedraftitemid == $files->get_itemid()) {
                     $filename = $files->get_filename();
-                    $covidcertificate = '/pluginfile.php/' . $files->get_contextid() .
+                    $covidcertificate = '/blocks/covid_notifications/covid_plugin_file.php/' . $files->get_contextid() .
                                         '/block_covid_notifications/attachment/'
                                         . $files->get_itemid() . "/"
                                         . $filename;

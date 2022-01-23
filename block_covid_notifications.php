@@ -61,7 +61,12 @@ class block_covid_notifications extends block_base
 
         $guideline = new block_covid_notifications_handel();
         $touser = $guideline->getuseremailbyroleid($pluginconfig->approvedrole);
-        if (is_siteadmin()) {
+        $managerallow = is_siteadmin() || in_array($USER->email, $touser) ? true : false;
+        if ($managerallow) {
+            $redirecturl = new moodle_url('/blocks/covid_notifications/pages/admin_report.php');
+            if (!is_siteadmin()) {
+                $redirecturl = new moodle_url('/blocks/covid_notifications/pages/view_certificate_report.php');
+            }
             $this->content = new stdClass();
             $renderer = $this->page->get_renderer('block_covid_notifications');
             $html = "";
@@ -75,27 +80,7 @@ class block_covid_notifications extends block_base
             $html .= html_writer::start_tag('div',
             array('class' => get_string('covid_more_details_class', 'block_covid_notifications')));
             $html .= html_writer::link(
-                new moodle_url('/blocks/covid_notifications/pages/admin_report.php'),
-                get_string('clikaminreport', 'block_covid_notifications'),
-                array('title' => get_string('clikaminreport', 'block_covid_notifications'),
-                'class' => get_string('covid_btn_prim_class', 'block_covid_notifications')));
-            $html .= html_writer::end_tag('div');
-            $this->content->text = $html;
-            return $this->content;
-        } else if (in_array($USER->email, $touser)) {
-            $this->content = new stdClass();
-            $renderer = $this->page->get_renderer('block_covid_notifications');
-            $html = "";
-            if (!empty($notenable)) {
-                $html .= html_writer::start_tag('h5',
-                array('class' => get_string('covid_main_class', 'block_covid_notifications')));
-                $html .= $nottitle;
-                $html .= html_writer::end_tag('h5');
-            }
-            $html .= html_writer::start_tag('div',
-            array('class' => get_string('covid_more_details_class', 'block_covid_notifications')));
-            $html .= html_writer::link(
-                new moodle_url('/blocks/covid_notifications/pages/view_certificate_report.php'),
+                $redirecturl,
                 get_string('clikaminreport', 'block_covid_notifications'),
                 array('title' => get_string('clikaminreport', 'block_covid_notifications'),
                 'class' => get_string('covid_btn_prim_class', 'block_covid_notifications')));
@@ -104,7 +89,6 @@ class block_covid_notifications extends block_base
             return $this->content;
         } else {
             $record = $DB->get_record('block_covid_notifications', array('user_id' => $USER->id), '*');
-
             if ($record->type == 2) {
                 $this->content->text = '';
                 return $this->content;

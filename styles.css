@@ -1,71 +1,38 @@
 /**
- * Advanced Notifications SCSS
+ * Covid Notifications SCSS
  *
  * @package    block_covid_notifications
  * @copyright  2021 onwards Celox Group
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Celox Group <info@celoxgroup.com.au>
  */
-body #notifications_table_wrapper td > form,
-body #notifications_restore_table_wrapper td > form {
-    display: inline;
-}
 
-body #notifications_table_wrapper td > form button,
-body #notifications_restore_table_wrapper td > form button {
-    border: none;
-    background: none;
-    transform: scale(1.1);
-    transition: 100ms;
-}
-
-body #notifications_table_wrapper td > form button[class*="restore"],
-body #notifications_table_wrapper td > form button[class*="edit"],
-body #notifications_restore_table_wrapper td > form button[class*="restore"],
-body #notifications_restore_table_wrapper td > form button[class*="edit"] {
-    color: #060;
-}
-
-body #notifications_table_wrapper td > form button[class*="delete"],
-body #notifications_restore_table_wrapper td > form button[class*="delete"] {
-    color: #730000;
-}
-
-body #notifications_table_wrapper td > form button:hover,
-body #notifications_table_wrapper td > form button:focus,
-body #notifications_restore_table_wrapper td > form button:hover,
-body #notifications_restore_table_wrapper td > form button:focus {
-    outline: none;
-    transform: scale(1.25);
-    transition: 100ms;
-}
-
-body #add_notification_wrapper_id {
+body .block_covid_notifications {
     margin-top: 1.5em;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert {
+body .block_covid_notifications .alert.preview-alert {
     position: relative;
     padding-right: 14px;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert.aicon {
+body .block_covid_notifications .alert.preview-alert.aicon {
     padding-left: 3em;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert.dismissible {
+body .block_covid_notifications .alert.preview-alert.dismissible {
     padding-right: 2em;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert > * {
+body .block_covid_notifications .alert.preview-alert > * {
     display: inline;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert > .preview-aicon {
+body .block_covid_notifications .alert.preview-alert > .preview-aicon {
     display: block;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert > .preview-aicon img {
+body .block_covid_notifications .alert.preview-alert > .preview-aicon img {
     height: 1.5em;
     position: absolute;
     top: calc(50% - 0.75em);
@@ -73,7 +40,7 @@ body #add_notification_wrapper_id .alert.preview-alert > .preview-aicon img {
     opacity: 0.5;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert > .preview-alert-dismissible {
+body .block_covid_notifications .alert.preview-alert > .preview-alert-dismissible {
     position: absolute;
     font-size: 1em;
     line-height: 1em;
@@ -81,24 +48,24 @@ body #add_notification_wrapper_id .alert.preview-alert > .preview-alert-dismissi
     right: 1em;
 }
 
-body #add_notification_wrapper_id .alert.preview-alert > .preview-alert-dismissible > * {
+body .block_covid_notifications .alert.preview-alert > .preview-alert-dismissible > * {
     cursor: pointer;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form .row {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form .row {
     margin-left: 0;
     margin-right: 0;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form .text-muted {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form .text-muted {
     width: 100%;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_title {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_title {
     margin-top: 1.5em;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_message {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_message {
     width: 100%;
     margin-bottom: 1.5em;
     resize: both;
@@ -106,41 +73,41 @@ body #add_notification_wrapper_id .add_notification_form_wrapper #add_notificati
     min-height: 1.5em;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form .requiredfield {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form .requiredfield {
     background-color: rgba(255, 0, 0, 0.075);
     border: 1px solid #f00;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form strong.requiredfield {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form strong.requiredfield {
     padding: 0.25em;
     border-color: transparent;
     border-radius: 5px;
     color: #af1e1e;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form strong.required {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form strong.required {
     color: #af1e1e;
     font-size: 1.25em;
     padding: 0 5px;
     vertical-align: top;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form input[type="date"] {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form input[type="date"] {
     width: calc(100% / 12 * 7);
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form .btn {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form .btn {
     margin-top: 0.5em;
     margin-bottom: 0;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_status {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_status {
     display: none;
     position: relative;
     margin-top: 10px;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_status .signal {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_status .signal {
     border: 5px solid #333;
     border-radius: 30px;
     height: 30px;
@@ -155,12 +122,12 @@ body #add_notification_wrapper_id .add_notification_form_wrapper #add_notificati
     animation-direction: reverse;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_status .saving {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_status .saving {
     padding-top: 5px;
     margin-left: 40px;
 }
 
-body #add_notification_wrapper_id .add_notification_form_wrapper #add_notification_form #add_notification_status .done {
+body .block_covid_notifications .add_notification_form_wrapper #add_notification_form #add_notification_status .done {
     display: none;
     padding-top: 5px;
     margin-left: 40px;

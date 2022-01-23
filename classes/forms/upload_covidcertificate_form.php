@@ -35,10 +35,11 @@ class upload_covidcertificate_form extends \moodleform {
         $mform = $this->_form;
         $maxbytes = "";
         $mform->addElement('header', 'settingsheader', get_string('upload'));
+        $fileexcept = array('.jpg', 'document');
         $options = array('subdirs' => 0,
             'maxbytes' => $maxbytes,
             'maxfiles' => 1,
-            'accepted_types' => '*',
+            'accepted_types' => $fileexcept,
         );
         $mform->addElement(
                     'filemanager',

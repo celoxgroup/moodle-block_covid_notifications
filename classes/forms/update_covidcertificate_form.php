@@ -36,18 +36,12 @@ class update_covidcertificate_form extends \moodleform {
         $mform = $this->_form;
 
         $id = $this->_customdata['id'];
-        $userid = $this->_customdata['userid'];
         $retype = $this->_customdata['retype'];
         $remessage = $this->_customdata['remessage'];
-        $cid = $this->_customdata['cid'];
         $curl = $this->_customdata['curl'];
-        $mform->addElement('hidden', 'id', $id);
-        $mform->addElement('hidden', 'userid', $userid);
-        $radioarray = array();
-        $attributes = array();
-        $radioarray[] = $mform->createElement('radio', 'type', '', get_string('yes'), 2);
-        $radioarray[] = $mform->createElement('radio', 'type', '', get_string('no'), 1);
 
+        $mform->addElement('hidden', 'id', $id);
+        $mform->setType('id', PARAM_INT);
         if (!empty($curl)) {
             $htmllink = '<div class="form-group row" >
             <div class="col-md-3">' . get_string("form/download", "block_covid_notifications") . '</div>
@@ -58,6 +52,9 @@ class update_covidcertificate_form extends \moodleform {
             $mform->addElement('html', $htmllink);
         }
 
+        $radioarray = array();
+        $radioarray[] = $mform->createElement('radio', 'type', '', get_string('yes'), 2);
+        $radioarray[] = $mform->createElement('radio', 'type', '', get_string('no'), 1);
         $mform->addGroup($radioarray, 'radioar', get_string("form/vaccintype", "block_covid_notifications"), array(' '), false);
         $mform->setDefault('type', $retype);
         $mform->addElement(
@@ -67,8 +64,10 @@ class update_covidcertificate_form extends \moodleform {
                          'wrap="virtual" rows="20" cols="50"'
                         );
         $mform->setDefault('message', $remessage);
+        $mform->setType('message', PARAM_CLEANHTML);
+
         $buttonarray = array();
-        $buttonarray[] = $mform->createElement('submit', 'submitbutton', get_string('savechanges'));
+        $buttonarray[] = $mform->createElement('submit', 'submitbutton', get_string("savechanges", "block_covid_notifications"));
         $buttonarray[] = $mform->createElement('cancel');
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
     }

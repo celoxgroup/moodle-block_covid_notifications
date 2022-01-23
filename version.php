@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 $plugin->component = 'block_covid_notifications'; // Recommended since 2.0.2 (MDL-26035). Required since 3.0 (MDL-48494).
-$plugin->version = 2021281028; // YYYYMMDDHH (year, month, day, 24-hr format hour).
-$plugin->requires = 2018051712; // YYYYMMDDHH (Version number for Moodle v3.5.3 as at 21/01/2019).
+$plugin->version = 2021122710; // YYYYMMDDHH (year, month, day, 24-hr format hour).
+$plugin->requires = 2018051712; // YYYYMMDDHH (Version number for Moodle v3.10 as at 09/11/2020).
 $plugin->maturity = MATURITY_STABLE; // Code maturity/stability.
 $plugin->release = 'v2.1.3'; // Human-readable release version.

@@ -30,7 +30,7 @@ function block_covid_notifications_pluginfile($course, $cm, $context, $filearea,
         $hash = $fs->get_pathname_hash($context->id, 'block_covid_notifications', 'attachment', $args[0], "/", $args[1]);
         $files = $fs->get_file_by_hash($hash);
         if (!isset($files) || empty($files)) {
-            $error = "File not available.";
+            $error = get_string('filenotexisterror', 'block_covid_notifications');
             $urltogo = new moodle_url('/blocks/covid_notifications/pages/upload_covid_certificate.php');
             redirect($urltogo, $error, null, \core\output\notification::NOTIFY_ERROR);
         }
@@ -40,10 +40,11 @@ function block_covid_notifications_pluginfile($course, $cm, $context, $filearea,
 
 function block_covid_notifications_getusersrole() {
     global $DB;
+    $param = ['guest', 'student', 'user' , 'frontpage'];
     $sql = "SELECT id , archetype
     FROM {role}
-    WHERE archetype NOT IN ('guest', 'student', 'user' , 'frontpage')";
-    $roles = $DB->get_records_sql($sql);
+    WHERE archetype NOT IN (?)";
+    $roles = $DB->get_records_sql($sql, $param);
     $response = [];
     foreach ($roles as $role) {
         $response[$role->id] = ucfirst($role->archetype);
@@ -82,13 +83,4 @@ function block_covid_notifications_getnotificationtype() {
     'block_covid_notifications'))] = get_string('notifications_add_option_announcement',
     'block_covid_notifications');
     return $formats;
-}
-
-function block_covid_notifications_get_fontawesome_icon_map() {
-    return [
-        'block_covid_notifications:i/pinned' => 'fa-map-pin',
-        'block_covid_notifications:t/selected' => 'fa-check',
-        'block_covid_notifications:t/subscribed' => 'fa-envelope-o',
-        'block_covid_notifications:t/unsubscribed' => 'fa-envelope-open-o',
-    ];
 }
